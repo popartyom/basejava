@@ -7,10 +7,6 @@ public class ArrayStorage {
     Resume[] storage = new Resume[10000];
     private int size;
 
-    public ArrayStorage() {
-        this.size = size();
-    }
-
     void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -19,16 +15,16 @@ public class ArrayStorage {
     void save(Resume r) {
         if (size < storage.length) {
             storage[size] = r;
-            size += 1;
+            size++;
         } else {
-            System.out.println(r.uuid + "Wasn't saved! The storage is full!");
+            System.out.println(r.uuid + "wasn't saved! The storage is full!");
         }
     }
 
     Resume get(String uuid) {
-        int i = getIndex(uuid);
-        if (i != -1) {
-            return storage[i];
+        int index = getIndex(uuid);
+        if (index != -1) {
+            return storage[index];
         }
         return null;
     }
@@ -43,10 +39,12 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        int i = getIndex(uuid);
-        storage[i] = storage[size - 1];
-        storage[size - 1] = null;
-        size -= 1;
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
+        }
     }
 
     /**
@@ -57,10 +55,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        int i = 0;
-        while (storage[i] != null) {
-            i++;
-        }
-        return i;
+        return size;
     }
 }
