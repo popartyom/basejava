@@ -19,16 +19,16 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (getIndex(r.uuid) == -1) {
+        if (getIndex(r.getUuid()) == -1) {
             if (size < storage.length) {
                 storage[size] = r;
                 size++;
-                System.out.println(r.uuid + " was saved!");
+                System.out.println(r.getUuid() + " was saved!");
             } else {
-                System.out.println(r.uuid + " wasn't saved! The storage is full!");
+                System.out.println(r.getUuid() + " wasn't saved! The storage is full!");
             }
         } else {
-            System.out.println(r.uuid + " is already exists!");
+            System.out.println(r.getUuid() + " is already exists!");
         }
     }
 
@@ -53,9 +53,12 @@ public class ArrayStorage {
     }
 
     public void update(@NotNull Resume r) {
-        int index = getIndex(r.uuid);
+        int index = getIndex(r.getUuid());
         if (index > -1) {
-            System.out.println("Uuid is " + storage[index]);
+            storage[index] = r;
+            System.out.println("Updated " + r.getUuid() + "!");
+        } else {
+            System.out.println("No such element: " + r.getUuid() + "!");
         }
 
     }
@@ -77,7 +80,7 @@ public class ArrayStorage {
 
     private int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].uuid)) {
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
