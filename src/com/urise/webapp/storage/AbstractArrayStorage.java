@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.*;
 import com.urise.webapp.model.*;
 import org.jetbrains.annotations.*;
 
@@ -24,7 +25,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(@NotNull Resume r) {
         int index = getIndex(r.getUuid());
         if (index < 0) {
-            System.out.println("No such element: " + r.getUuid() + "!");
+            throw new NonExistStorageException(r.getUuid());
         } else {
             storage[index] = r;
             System.out.println("Updated " + r.getUuid() + "!");
@@ -35,9 +36,9 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index > 0) {
-            System.out.println(r.getUuid() + " already exists!");
+            throw new ExistStorageException(r.getUuid());
         } else if (size == STORAGE_LIMIT) {
-            System.out.println(r.getUuid() + " wasn't saved! The storage is full!");
+            throw new StorageException("wasn't saved! The storage is full!", r.getUuid());
         } else {
             insertElement(r, index);
             size++;
@@ -51,8 +52,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index > -1) {
             return storage[index];
         }
-        System.out.println("No such element: " + uuid + "!");
-        return null;
+        throw new NonExistStorageException(uuid);
     }
 
     @Override
