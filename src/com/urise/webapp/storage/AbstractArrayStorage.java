@@ -2,7 +2,6 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.*;
 import com.urise.webapp.model.*;
-import org.jetbrains.annotations.*;
 
 import java.util.*;
 
@@ -22,7 +21,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public void update(@NotNull Resume r) {
+    public void update(Resume r) {
         int index = getIndex(r.getUuid());
         if (index < 0) {
             throw new NotExistStorageException(r.getUuid());

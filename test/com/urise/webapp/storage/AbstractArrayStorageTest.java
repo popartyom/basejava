@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * @author Artyom Popov
  */
-public class AbstractArrayStorageTest {
+public abstract class AbstractArrayStorageTest {
     private Storage storage;
 
     private static final String UUID_1 = "uuid1";
@@ -24,6 +24,8 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void clear() throws Exception {
+        storage.clear();
+        Assert.assertEquals(0, storage.size());
     }
 
     @Test
@@ -36,6 +38,7 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void get() throws Exception {
+        Assert.assertEquals(storage.getClass().getDeclaredField("storage").get(storage), storage.get("uuid2"));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -45,6 +48,8 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void delete() throws Exception {
+        storage.delete("uuid2");
+        Assert.assertEquals(2, storage.size());
     }
 
     @Test
@@ -54,5 +59,6 @@ public class AbstractArrayStorageTest {
 
     @Test
     public void getAll() throws Exception {
+//        Assert.assertArrayEquals(storage.getClass().getDeclaredFields()[1], storage.getAll());
     }
 }
