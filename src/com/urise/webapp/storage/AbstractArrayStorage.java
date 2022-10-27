@@ -34,7 +34,7 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index > 0) {
+        if (index >= 0) {
             throw new ExistStorageException(r.getUuid());
         } else if (size == STORAGE_LIMIT) {
             throw new StorageException("wasn't saved! The storage is full!", r.getUuid());
@@ -63,7 +63,7 @@ public abstract class AbstractArrayStorage implements Storage {
             size--;
             System.out.println(uuid + " was deleted!");
         } else {
-            System.out.println("No such element: " + uuid + "!");
+            throw new NotExistStorageException(uuid);
         }
     }
 
