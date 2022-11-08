@@ -4,7 +4,7 @@ import com.urise.webapp.model.*;
 
 import java.util.*;
 
-public class MainCollection {
+public class MainCollections {
     private static final String UUID_1 = "uuid1";
     private static final Resume RESUME_1 = new Resume(UUID_1);
     private static final String UUID_2 = "uuid2";
@@ -36,5 +36,19 @@ public class MainCollection {
             }
         }
         System.out.println(collection);
+
+        Map<String, Resume> map = new HashMap<>();
+        map.put(UUID_1, RESUME_1);
+        map.put(UUID_2, RESUME_2);
+        map.put(UUID_3, RESUME_3);
+
+        // Bad!
+        for (String uuid : map.keySet()) {
+            System.out.println(map.get(uuid));
+        }
+
+        for (Map.Entry<String, Resume> entry : map.entrySet()) {
+            System.out.println(entry.getValue());
+        }
     }
 }
