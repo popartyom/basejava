@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.*;
 import com.urise.webapp.model.*;
 
 import java.util.*;
@@ -8,73 +7,60 @@ import java.util.*;
 /**
  * @author Artyom Popov
  */
-public class ListStorage implements Storage {
+public class ListStorage extends AbstractStorage {
 
-    private static final List<Resume> storage = new ArrayList<>();
+    private static final List<Resume> listStorage = new ArrayList<>();
 
     @Override
     public void clear() {
-        storage.clear();
+        listStorage.clear();
         System.out.println("Storage is empty!");
     }
 
     @Override
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(r.getUuid());
-        } else {
-            storage.set(index, r);
-            System.out.println("Updated " + r.getUuid() + "!");
-        }
-    }
-
-    @Override
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        } else {
-            storage.add(r);
-            System.out.println(r.getUuid() + " was saved!");
-        }
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            return storage.get(index);
-        }
-        throw new NotExistStorageException(uuid);
-    }
-
-    @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            storage.remove(index);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
-    @Override
     public Resume[] getAll() {
-        return  storage.toArray(new Resume[0]);
+        if (listStorage.size() == 0) {
+            System.out.println("Storage is empty!");
+        }
+        return  listStorage.toArray(new Resume[0]);
     }
 
     @Override
     public int size() {
-        return storage.size();
+        return listStorage.size();
     }
 
-    private int getIndex(String uuid) {
-        for (int i = 0; i < storage.size(); i++) {
-            if (uuid.equals(storage.get(i).getUuid())) {
+    protected Integer getSearchKey(String uuid) {
+        for (int i = 0; i < listStorage.size(); i++) {
+            if (uuid.equals(listStorage.get(i).getUuid())) {
                 return i;
             }
         }
-        return -1;
+        return null;
+    }
+
+    @Override
+    protected void doUpdate(Resume r, Object searchKey) {
+        listStorage.set((Integer) searchKey, r);
+    }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
+    }
+
+    @Override
+    protected void doSave(Resume r, Object searchKey) {
+        listStorage.add(r);
+    }
+
+    @Override
+    protected void doDelete(Object searchKey) {
+        listStorage.remove(((Integer) searchKey).intValue());
+    }
+
+    @Override
+    protected Resume doGet(Object searchKey) {
+        return listStorage.get((Integer) searchKey);
     }
 }
