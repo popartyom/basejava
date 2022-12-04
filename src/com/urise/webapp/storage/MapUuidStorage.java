@@ -14,42 +14,42 @@ public class MapUuidStorage extends AbstractStorage{
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-
+    protected void doUpdate(Resume r, Object uuid) {
+        mapStorage.put((String) uuid, r);
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return false;
+    protected boolean isExist(Object uuid) {
+        return mapStorage.containsKey((String) uuid);
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
-
+    protected void doSave(Resume r, Object uuid) {
+        mapStorage.put((String) uuid, r);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-
+    protected void doDelete(Object uuid) {
+        mapStorage.remove((String) uuid);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return null;
+    protected Resume doGet(Object uuid) {
+        return mapStorage.get((String) uuid);
     }
 
     @Override
     public void clear() {
-
+        mapStorage.clear();
     }
 
     @Override
     public List<Resume> doCopyAll() {
-        return Collections.emptyList();
+        return new ArrayList<>(mapStorage.values());
     }
 
     @Override
     public int size() {
-        return 0;
+        return mapStorage.size();
     }
 }
