@@ -56,11 +56,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     @Override
-    public Resume[] getAll() {
-        if (size == 0) {
-            System.out.println("Storage is empty!");
-        }
-        return Arrays.copyOf(storage, size);
+    public List<Resume> doCopyAll() {
+        return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
     @Override

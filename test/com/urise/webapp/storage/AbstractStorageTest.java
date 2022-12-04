@@ -4,6 +4,8 @@ import com.urise.webapp.exception.*;
 import com.urise.webapp.model.*;
 import org.junit.*;
 
+import java.util.*;
+
 import static org.junit.Assert.*;
 
 /**
@@ -101,12 +103,10 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
-        Resume[] resumes = storage.getAll();
-        assertEquals(3, resumes.length);
-        assertEquals(RESUME_1, resumes[0]);
-        assertEquals(RESUME_2, resumes[1]);
-        assertEquals(RESUME_3, resumes[2]);
+    public void getAllSorted() {
+        List<Resume> resumes = storage.getAllSorted();
+        assertEquals(3, resumes.size());
+        assertEquals(resumes, Arrays.asList(RESUME_1 ,RESUME_2, RESUME_3));
     }
 
     private void assertSize(int size) {

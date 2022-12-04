@@ -44,8 +44,8 @@ public class MapUuidStorage extends AbstractStorage{
     }
 
     @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+    public List<Resume> doCopyAll() {
+        return Collections.emptyList();
     }
 
     @Override

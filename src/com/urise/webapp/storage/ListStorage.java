@@ -18,11 +18,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        if (listStorage.size() == 0) {
-            System.out.println("Storage is empty!");
-        }
-        return  listStorage.toArray(new Resume[0]);
+    public List<Resume> doCopyAll() {
+        return new ArrayList<>(listStorage);
     }
 
     @Override
