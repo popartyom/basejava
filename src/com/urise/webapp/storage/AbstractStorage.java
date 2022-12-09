@@ -4,8 +4,12 @@ import com.urise.webapp.exception.*;
 import com.urise.webapp.model.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 public abstract class AbstractStorage<SK> implements Storage {
+
+//    protected final Logger log = Logger.getLogger(getClass().getName());
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
     protected abstract SK getSearchKey(String uuid);
 
@@ -25,19 +29,20 @@ public abstract class AbstractStorage<SK> implements Storage {
     public void update(Resume r) {
         SK searchKey = getExistedSearchKey(r.getUuid());
         doUpdate(r, searchKey);
-        System.out.println("Updated " + r.getUuid() + "!");
+        LOG.info("Update " + r);
     }
 
     @Override
     public void save(Resume r) {
         SK searchKey = getNotExistedSearchKey(r.getUuid());
         doSave(r, searchKey);
-        System.out.println(r.getUuid() + " was saved!");
+        LOG.info("Save " + r);
     }
 
     @Override
     public Resume get(String uuid) {
         SK searchKey = getExistedSearchKey(uuid);
+        LOG.info("Get" + uuid);
         return doGet(searchKey);
     }
 
@@ -45,12 +50,13 @@ public abstract class AbstractStorage<SK> implements Storage {
     public void delete(String uuid) {
         SK searchKey = getExistedSearchKey(uuid);
         doDelete(searchKey);
-        System.out.println(uuid + " was deleted!");
+        LOG.info("Delete " + uuid);
     }
 
     private SK getExistedSearchKey(String uuid) {
         SK searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " not exist");
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
@@ -59,6 +65,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getNotExistedSearchKey(String uuid) {
         SK searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " already exist");
             throw new ExistStorageException(uuid);
         }
         return searchKey;
@@ -68,6 +75,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     public List<Resume> getAllSorted() {
         List<Resume> list = doCopyAll();
         Collections.sort(list);
+        LOG.info("getAllSorted");
         return list;
     }
 }
