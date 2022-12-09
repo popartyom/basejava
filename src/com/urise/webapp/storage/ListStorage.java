@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * @author Artyom Popov
  */
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
     private static final List<Resume> listStorage = new ArrayList<>();
 
@@ -37,27 +37,27 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        listStorage.set((Integer) searchKey, r);
+    protected void doUpdate(Resume r, Integer searchKey) {
+        listStorage.set(searchKey, r);
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
+    protected boolean isExist(Integer searchKey) {
         return searchKey != null;
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doSave(Resume r, Integer searchKey) {
         listStorage.add(r);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        listStorage.remove(((Integer) searchKey).intValue());
+    protected void doDelete(Integer searchKey) {
+        listStorage.remove(searchKey.intValue());
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return listStorage.get((Integer) searchKey);
+    protected Resume doGet(Integer searchKey) {
+        return listStorage.get(searchKey);
     }
 }

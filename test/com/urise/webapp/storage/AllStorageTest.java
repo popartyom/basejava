@@ -16,5 +16,4 @@ import org.junit.runners.*;
                 MapResumeStorageTest.class
         })
 public class AllStorageTest {
-
 }

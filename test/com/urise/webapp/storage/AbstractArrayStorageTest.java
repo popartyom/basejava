@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  * @author Artyom Popov
  */
-public abstract class AbstractArrayStorageTest extends AbstractStorageTest{
+public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
     protected AbstractArrayStorageTest(Storage storage) {
         super(storage);
