@@ -4,6 +4,7 @@ import com.urise.webapp.exception.*;
 import com.urise.webapp.model.*;
 import org.junit.*;
 
+import java.io.File;
 import java.time.Month;
 import java.util.*;
 
@@ -13,6 +14,8 @@ import static org.junit.Assert.*;
  * @author Artyom Popov
  */
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\git-javaops\\basejava\\storage");
+
     protected final Storage storage;
 
     private static final String UUID_1 = "uuid1";
@@ -78,7 +81,7 @@ public abstract class AbstractStorageTest {
     public void update() {
         Resume newResume = new Resume(UUID_1, "NewName");
         storage.update(newResume);
-        assertSame(newResume, storage.get(UUID_1));
+        assertEquals(newResume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
