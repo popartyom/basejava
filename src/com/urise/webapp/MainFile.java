@@ -20,35 +20,29 @@ public class MainFile {
         System.out.println(dir.isDirectory());
         String[] list = dir.list();
         if (list != null) {
-            for (String name: list) {
+            for (String name : list) {
                 System.out.println(name);
             }
         }
 
-        try (FileInputStream fis = new FileInputStream(filePath)){
+        try (FileInputStream fis = new FileInputStream(filePath)) {
             System.out.println(fis.read());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        printDirectoryDeeply(dir, 0);
+        printDirectoryDeeply(dir, "");
     }
 
-    public static void printDirectoryDeeply(File dir, int tabCounter) {
+    public static void printDirectoryDeeply(File dir, String offset) {
         File[] files = dir.listFiles();
 
-        String tabStr = "";
-        for (int i = 0; i < tabCounter; i++) {
-            tabStr+= "\t";
-        }
         if (files != null) {
-            tabCounter++;
-            tabStr+= "\t";
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println(tabStr + "File: " + file.getName());
+                    System.out.println(offset + "F: " + file.getName());
                 } else if (file.isDirectory()) {
-                    System.out.println(tabStr + "Directory: " + file.getName());
-                    printDirectoryDeeply(file, tabCounter);
+                    System.out.println(offset + "D: " + file.getName());
+                    printDirectoryDeeply(file, offset + "  ");
                 }
             }
         }
