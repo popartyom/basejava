@@ -58,6 +58,29 @@ public class MainConcurrency {
             }
         });
         System.out.println(mainConcurrency.counter);
+
+        final String lock1 = "lock1";
+        final String lock2 = "lock2";
+        deadlock(lock1, lock2);
+        deadlock(lock2, lock1);
+    }
+
+    private static void deadlock(String lock1, String lock2) {
+        new Thread(() -> {
+            System.out.println("Waiting " + lock1);
+            synchronized (lock1) {
+                System.out.println("Holding " + lock1);
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("Waiting " + lock2);
+                synchronized (lock2) {
+                    System.out.println("Holding " + lock2);
+                }
+            }
+        }).start();
     }
 
     private synchronized void inc() {
