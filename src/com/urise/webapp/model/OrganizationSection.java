@@ -21,7 +21,7 @@ public class OrganizationSection extends Section {
     public OrganizationSection() {
     }
 
-    public List<Organization> getOrganisations() {
+    public List<Organization> getOrganizations() {
         return organizations;
     }
 
