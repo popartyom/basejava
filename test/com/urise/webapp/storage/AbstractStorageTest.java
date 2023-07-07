@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.exception.*;
 import com.urise.webapp.model.*;
 import org.junit.*;
@@ -14,7 +15,7 @@ import static org.junit.Assert.*;
  * @author Artyom Popov
  */
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("C:\\git-javaops\\basejava\\storage");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     protected final Storage storage;
 
