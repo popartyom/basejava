@@ -3,7 +3,7 @@ package com.urise.webapp.exception;
 /**
  * @author Artyom Popov
  */
-public class StorageException extends RuntimeException{
+public class StorageException extends RuntimeException {
     private final String uuid;
 
     public StorageException(String message, String uuid) {
@@ -23,6 +23,11 @@ public class StorageException extends RuntimeException{
     public StorageException(String message) {
         this(message, null, null);
     }
+
+    public StorageException(Exception e) {
+        this(e.getMessage(), e);
+    }
+
 
     public String getUuid() {
         return uuid;
