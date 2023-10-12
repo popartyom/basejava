@@ -34,9 +34,12 @@ public abstract class AbstractStorageTest {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-/*
         R1.addContact(ContactType.MAIL, "mail1@ya.ru");
         R1.addContact(ContactType.PHONE, "11111");
+        R4.addContact(ContactType.PHONE, "44444");
+        R4.addContact(ContactType.SKYPE, "skype");
+
+/*
         R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
         R1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
         R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achivment11", "Achivment12", "Achivment13"));
@@ -82,6 +85,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() {
         Resume newResume = new Resume(UUID_1, "NewName");
+        R1.addContact(ContactType.MAIL, "mail1@gmail.com");
+        R1.addContact(ContactType.SKYPE, "Newskype");
+        R4.addContact(ContactType.MOBILE, "+7 921 222-22-22");
         storage.update(newResume);
         assertEquals(newResume, storage.get(UUID_1));
     }
@@ -134,9 +140,11 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() {
-        List<Resume> resumes = storage.getAllSorted();
-        assertEquals(3, resumes.size());
-        assertEquals(resumes, Arrays.asList(R1, R2, R3));
+        List<Resume> list = storage.getAllSorted();
+        assertEquals(3, list.size());
+        List<Resume> sortedResumes = Arrays.asList(R1, R2, R3);
+        Collections.sort(sortedResumes);
+        assertEquals(sortedResumes, list);
     }
 
     private void assertSize(int size) {
